@@ -1,4 +1,5 @@
-import './styles.css';
+import { useState } from 'react';
+import './App.css';
 
 export default function App() {
   return (
@@ -43,15 +44,30 @@ const questions = [
 ];
 
 function FlashCards() {
+  const [selectedId, setSelectedId] = useState(null);
+
+  function handleClick(id) {
+    setSelectedId(id !== selectedId ? id : null);
+  }
+
   return (
-    <div>
-      {
-        <ul>
-          {questions.map((q) => (
-            <li>{<Question question={q.question} />}</li>
-          ))}
-        </ul>
-      }
+    <div className='flashcards'>
+      {questions.map((q) => (
+        <div
+          key={q.id}
+          onClick={() => {
+            handleClick(q.id);
+          }}
+          className={q.id === selectedId ? 'selected' : ''}
+        >
+          <p>{q.id === selectedId ? q.answer : q.question}</p>
+        </div>
+      ))}
     </div>
   );
+}
+{
+  /* <div key={q.id}>
+          <p>{q.question}</p>
+        </div> */
 }
